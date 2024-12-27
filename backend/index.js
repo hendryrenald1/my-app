@@ -12,7 +12,7 @@ admin.initializeApp({
 // Initialize Neo4j connection
 const driver = neo4j.driver(
   "neo4j+s://0aee5d59.databases.neo4j.io", // Replace with your Neo4j AuraDB URI
-  neo4j.auth.basic("neo4j", "fuXUNiavTl0MCafwGXK81ikosE76LtNrr-zd2NFZ-jQ") // Replace with your credentials
+  neo4j.auth.basic("neo4j", process.env.NEO4J_PASSWORD) // Replace with your credentials
 );
 const session = driver.session();
 
