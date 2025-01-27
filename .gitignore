@@ -2,13 +2,13 @@
 
 # dependencies
 # Ignore node_modules in both backend and frontend
-/backend/node_modules
-/frontend/node_modules
 
+**/.env
+**/node_modules
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
 
-
-/.pnp
-.pnp.js
 
 # testing
 /coverage
@@ -18,30 +18,7 @@
 
 # misc
 
-# Ignore environment files in both directories
-/backend/.env
-/frontend/.env
-
-
-/backend/.DS_Store
-/backend/.env.local
-/backend/.env.development.local
-/backend/.env.test.local
-/backend/.env.production.local
-
-/frontend/.DS_Store
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/.env.test.local
-/frontend/.env.production.local
-
-/frontend/npm-debug.log*
-/frontend/yarn-debug.log*
-/frontend/yarn-error.log*
-
-/backend/npm-debug.log*
-/backend/yarn-debug.log*
-/backend/yarn-error.log*
-
-/backend/firebase-service-account.json
-/frontend/src/utils/firebase/firebase-config.json
+**/firebase-service-account.json
+**/firebase/firebase-config.json
+**/firebase/firebase-service-account.json
+**/firebase/firebase-config.json
