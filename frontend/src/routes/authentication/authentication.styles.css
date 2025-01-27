@@ -1,0 +1,10 @@
+.authentication-container {
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    column-count: auto;
+}
+
+/* .component {
+    width: 48%;
+} */

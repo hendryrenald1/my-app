@@ -1,16 +1,10 @@
 import { initializeApp } from "firebase/app";
 import axios from "axios";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, createUserWithEmailAndPassword , signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBIY8xI9yG3rmivIsoiAnvNzOsXqIt1Mxw",
-  authDomain: "crwn-clothing-app-42312.firebaseapp.com",
-  projectId: "crwn-clothing-app-42312",
-  storageBucket: "crwn-clothing-app-42312.firebasestorage.app",
-  messagingSenderId: "781740667941",
-  appId: "1:781740667941:web:42243368471be340523bcc"
-};
+
+
+const firebaseConfig = require("./firebase-config.json"); 
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
@@ -33,6 +27,22 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   
 }
 
+
+export const signInUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) {
+    console.error('Email and password are required');
+    return null;
+  }
+
+  return await signInWithEmailAndPassword(auth, email, password);
+   
+  
+}
+
+
+export const signOutUser = async () => {
+  return await signOut(auth);
+}
 
 export const createNeo4jUser = async (userAuth,
   additionalInformation = {}
