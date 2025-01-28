@@ -5,6 +5,7 @@ import Navigation from "./routes/navigation/navigation.component"
 import ProtectedRoute from "./routes/protected/protected.component";
 import Authentication from "./routes/authentication/authentication.component";
 import FamilyTree from "./routes/family-tree/family-tree.component";
+import BranchList from "./components/branches/branch-list.component";
 
 import { UserContext } from "./components/context/user.context";
 
@@ -50,6 +51,8 @@ const App = () => {
         <Route path="dashboard" element={<Home />} />
         <Route path="shop" element={<Shopping />} />
         <Route path="family-tree" element={<FamilyTree />} />
+        <Route path="branch-list" element={<BranchList />} />
+
       </Route>
 
       {/* <Route path="/" element={<Navigation />}>

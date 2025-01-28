@@ -2,6 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const neo4j = require("neo4j-driver");
 const admin = require("firebase-admin");
+const dotenv = require('dotenv');
+
+
+dotenv.config();
 
 // Initialize Firebase Admin SDK for verifying tokens
 const serviceAccount = require("./firebase-service-account.json"); // Download this from Firebase Console
@@ -11,11 +15,14 @@ admin.initializeApp({
 
 // Initialize Neo4j connection
 const driver = neo4j.driver(
-  "neo4j+s://0aee5d59.databases.neo4j.io", // Replace with your Neo4j AuraDB URI
+   "neo4j+s://0aee5d59.databases.neo4j.io", // Replace with your Neo4j AuraDB URI
   neo4j.auth.basic("neo4j", process.env.NEO4J_PASSWORD) // Replace with your credentials
 );
+
+console.log(process.env.NEO4J_PASSWORD);
 const session = driver.session();
 
+console.log('Connected to Neo4j')
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -119,6 +126,51 @@ app.post('/register', async (req, res) => {
     }
   }
 });
+
+
+// Route to get all branches 
+app.get('/branches',  async (req, res) => {
+   try {
+    const session = driver.session();
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * parseInt(limit, 10);
+    const result = await session.run(
+      `MATCH (b:Branches) 
+       RETURN id(b) as id, b.name as name, b.address_line_1 as address_line_1, b.town as town, b.county as county, b.post_code as post_code 
+       SKIP ${skip} LIMIT ${limit}`
+    );
+
+    const countResult = await session.run(
+      `MATCH (b:Branches) 
+       RETURN count(b) as totalCount`
+    );
+
+    const totalCount = countResult.records[0].get('totalCount').low;
+    const branches = result.records.map(record => ({
+      id: record.get('id').low,
+      name: record.get('name'),
+      address_line_1: record.get('address_line_1'),
+      town: record.get('town'),
+      county: record.get('county'),
+      postcode: record.get('post_code')
+    }));
+
+    res.status(200).json({ branches, totalCount });
+   } catch (error) {
+    console.error("Error fetching branches:", error);
+    throw new Error("Failed to fetch branches.");
+} finally {
+    await session.close();
+}
+});
+
+
+// Route to check if the service is active
+app.get('/status', (req, res) => {
+  res.status(200).json({ message: 'Service is active' });
+});
+
+
 
 // Close session on app exit
 process.on('exit', () => {

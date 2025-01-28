@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use('/api', familyRoutes);
 
+
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);

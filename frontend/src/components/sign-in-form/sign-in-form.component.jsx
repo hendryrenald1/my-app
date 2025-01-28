@@ -45,9 +45,9 @@ const SignInForm = () => {
 
             const logGoogleUser = async () => {
                 try {
-                    // const { user } = await signInWithGooglePopup();
-                    const { user } = await signInWithGoogleRedirect();
-                    
+                    const { user } = await signInWithGooglePopup();
+                    // const { user } = await signInWithGoogleRedirect();
+                    setUser(user);    
                     const userNoderef = await createNeo4jUser(user);
                     console.log(userNoderef);
                 } catch (error) {

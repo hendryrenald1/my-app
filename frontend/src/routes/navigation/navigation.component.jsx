@@ -29,6 +29,7 @@ const Navigation = () => {
              <div className="links-container">
                 <Link  className="nav-link" to="/members">Members</Link>
                 <Link  className="nav-link" to="/home/family-tree">Family Tree</Link>
+                <Link  className="nav-link" to="/home/branch-list">Branches</Link>
                 {user === null ? (
                   <Link className="nav-link" to="/auth">Sign In</Link>
                 ) : (
