@@ -1,6 +1,7 @@
 // hooks/useBranches.js
 import { useState, useEffect } from 'react';
-import { fetchAllBranches } from '../services/branchService';
+import { fetchAllBranches, fetchBranchById } from '../services/branchService';
+import { updateBranchById } from '../services/branchService';
 
 const useBranches = (initialPage = 1, initialLimit = 10) => {
   const [branches, setBranches] = useState([]);
@@ -31,4 +32,52 @@ const useBranches = (initialPage = 1, initialLimit = 10) => {
   return { branches, loading, error, page, setPage, totalPages };
 };
 
-export default useBranches;
+const useBranchById = (branchId) => {
+  const [branch, setBranch] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadBranch = async () => {
+      try {
+        const data = await fetchBranchById(branchId);
+        setBranch(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (branchId) {
+      loadBranch();
+    }
+  }, [branchId]);
+
+  return { branch, loading, error };
+};
+
+const useUpdateBranch = () => {
+  const [updating, setUpdating] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const updateBranch = async (id,branchData) => {
+    setUpdating(true);
+    setUpdateError(null);
+    setSuccess(false);
+    try {
+      console.log(branchData);
+       await updateBranchById(id,branchData);
+      setSuccess(true);
+    } catch (err) {
+      setUpdateError(err.message);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  return { updateBranch, updating, updateError, success };
+};
+
+
+export { useBranches, useBranchById, useUpdateBranch };

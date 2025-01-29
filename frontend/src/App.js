@@ -6,6 +6,7 @@ import ProtectedRoute from "./routes/protected/protected.component";
 import Authentication from "./routes/authentication/authentication.component";
 import FamilyTree from "./routes/family-tree/family-tree.component";
 import BranchList from "./components/branches/branch-list.component";
+import Branch from "./components/branches/branch.component";
 
 import { UserContext } from "./components/context/user.context";
 
@@ -21,7 +22,7 @@ const Shopping = () => {
 
 const App = () => {
 
-  const { user,setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
 
   const handleLogout = () => {
@@ -52,9 +53,10 @@ const App = () => {
         <Route path="shop" element={<Shopping />} />
         <Route path="family-tree" element={<FamilyTree />} />
         <Route path="branch-list" element={<BranchList />} />
+        <Route path="branch/edit/:id" element={<Branch />} />
+        
 
       </Route>
-
       {/* <Route path="/" element={<Navigation />}>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shopping />} />
@@ -62,7 +64,7 @@ const App = () => {
         <Route path="/family-tree" element={<FamilyTree />} />
       </Route> */}
 
-  <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
 
 
     </Routes>

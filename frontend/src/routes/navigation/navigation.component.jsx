@@ -35,6 +35,7 @@ const Navigation = () => {
                 ) : (
                   <span className="nav-link" onClick={handleSignOut}>Sign Out</span>
                 )}
+                <Link className="nav-link" to="/home/branch/edit/1">Shop</Link>
             </div>
         </div>
 
